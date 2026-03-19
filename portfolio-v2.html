@@ -1,0 +1,1002 @@
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Janiel Franz Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&amp;display=swap" rel="stylesheet">
+    <style>
+        .collapsed .accordion-content { grid-template-rows: 0fr; }
+        .accordion-content { display: grid; grid-template-rows: 1fr; transition: grid-template-rows 0.5s ease-in-out; }
+        .accordion-inner { overflow: hidden; }
+        .testimonial-content { transition: opacity 0.35s ease, transform 0.35s ease, filter 0.35s ease; will-change: opacity, transform, filter; }
+        .testimonial-leave-next, .testimonial-enter-prev { opacity: 0; transform: translateX(-14px); filter: blur(2px); }
+        .testimonial-leave-prev, .testimonial-enter-next { opacity: 0; transform: translateX(14px); filter: blur(2px); }
+    </style>
+</head>
+<body class="bg-black text-white min-h-screen relative overflow-x-hidden selection:bg-white/20 selection:text-white font-light dark" style="font-family: 'Inter', sans-serif;">
+
+    <!-- Spline 3D background -->
+    <div class="fixed inset-0 z-0 pointer-events-none opacity-80">
+        <iframe src="https://my.spline.design/thresholddarkambientui-v0gkZCfi6zXm69kE0wccy70f/" frameborder="0" width="100%" height="100%" class="w-full h-full border-none"></iframe>
+    </div>
+
+    <!-- Inline Grid Background -->
+    <div class="fixed inset-0 z-0 pointer-events-none bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_70%_60%_at_50%_0%,#000_40%,transparent_100%)]"></div>
+
+    <!-- Floating Glass Navigation -->
+    <nav class="fixed top-6 left-1/2 transform -translate-x-1/2 z-50 bg-white/5 border border-white/10 rounded-full px-4 py-2.5 backdrop-blur-md w-[90%] max-w-6xl flex items-center justify-between shadow-2xl transition-all duration-300">
+        <!-- Left Brand -->
+        <div class="flex items-center gap-1 text-lg font-normal tracking-tight ml-2 shrink-0">
+            Janiel Franz<span class="text-neutral-400 text-xs font-light mt-1">®</span>
+        </div>
+
+        <!-- Center Links (Desktop) -->
+        <ul class="hidden lg:flex items-center space-x-8 text-sm text-neutral-300">
+            <li><a href="#start" class="hover:text-white transition-colors duration-200 font-normal">Start</a></li>
+            <li><a href="#about" class="hover:text-white transition-colors duration-200 font-normal">About me</a></li>
+            <li><a href="#services" class="hover:text-white transition-colors duration-200 font-normal">Services</a></li>
+            <li><a href="#projects" class="hover:text-white transition-colors duration-200 font-normal">Projects</a></li>
+            <li><a href="#testimonials" class="hover:text-white transition-colors duration-200 font-normal">Testimonials</a></li>
+        </ul>
+
+        <!-- Right Actions & Socials -->
+        <div class="flex items-center space-x-2 sm:space-x-3 shrink-0">
+            <div class="hidden sm:flex items-center space-x-1 mr-2 border-r border-white/10 pr-4">
+                <a href="#" class="p-2 rounded-full text-neutral-400 hover:text-white hover:bg-white/5 transition-all">
+                    <iconify-icon icon="solar:link-circle-linear" class="text-lg"></iconify-icon>
+                </a>
+                <a href="#" class="p-2 rounded-full text-neutral-400 hover:text-white hover:bg-white/5 transition-all">
+                    <iconify-icon icon="solar:case-minimalistic-linear" class="text-lg"></iconify-icon>
+                </a>
+            </div>
+
+            <!-- i18n Language Dropdown -->
+            <div class="relative group cursor-pointer">
+                <button id="language-toggle" type="button" class="flex items-center gap-1.5 text-xs font-normal text-neutral-300 hover:text-white transition-colors px-2.5 py-2 rounded-full hover:bg-white/5 border border-transparent hover:border-white/10">
+                    <iconify-icon icon="solar:global-linear" class="text-sm"></iconify-icon>
+                    <span id="current-lang-label" class="hidden sm:inline-block">EN</span>
+                    <iconify-icon icon="solar:alt-arrow-down-linear" class="text-[10px]"></iconify-icon>
+                </button>
+                <div class="absolute top-full right-0 mt-2 w-32 bg-neutral-900 border border-white/10 rounded-2xl shadow-xl overflow-hidden opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 translate-y-2 group-hover:translate-y-0 p-1.5 z-50">
+                    <div class="flex flex-col gap-0.5">
+                        <button id="lang-option-en" type="button" onclick="setLanguage('en')" class="w-full text-left px-3 py-2.5 text-xs rounded-xl transition-colors flex items-center justify-between font-normal">
+                            English
+                            <iconify-icon id="lang-check-en" icon="solar:check-circle-linear" class="text-sm text-white"></iconify-icon>
+                        </button>
+                        <button id="lang-option-es" type="button" onclick="setLanguage('es')" class="w-full text-left px-3 py-2.5 text-xs rounded-xl transition-colors flex items-center justify-between font-normal">
+                            Español
+                            <iconify-icon id="lang-check-es" icon="solar:check-circle-linear" class="text-sm text-white hidden"></iconify-icon>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <a href="#" class="hidden sm:flex hover:bg-neutral-200 transition-colors text-xs font-normal text-black bg-white rounded-full px-5 py-2.5 shadow-sm whitespace-nowrap">Start Project</a>
+
+            <!-- Mobile Menu Toggle Button -->
+            <button onclick="toggleMobileMenu()" class="lg:hidden p-2 text-neutral-400 hover:text-white transition-colors flex items-center justify-center rounded-full hover:bg-white/5">
+                <iconify-icon icon="solar:hamburger-menu-linear" class="text-xl"></iconify-icon>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu" class="fixed inset-0 bg-black/95 backdrop-blur-xl z-[60] hidden flex-col transition-opacity opacity-0 duration-300">
+        <div class="flex items-center justify-between p-6 md:p-8 w-full">
+            <div class="flex items-center gap-1 text-lg font-normal tracking-tight text-white">
+                Janiel Franz<span class="text-neutral-500 text-xs font-light mt-1">®</span>
+            </div>
+            <button onclick="toggleMobileMenu()" class="p-2 text-neutral-400 hover:text-white transition-colors rounded-full hover:bg-white/5">
+                <iconify-icon icon="solar:close-circle-linear" class="text-2xl"></iconify-icon>
+            </button>
+        </div>
+        <div class="flex flex-col items-center justify-center flex-1 space-y-8 pb-20">
+            <a href="#start" class="text-3xl text-white font-normal hover:text-neutral-400 transition-colors tracking-tight">Start</a>
+            <a href="#about" class="text-3xl text-white font-normal hover:text-neutral-400 transition-colors tracking-tight">About me</a>
+            <a href="#services" class="text-3xl text-white font-normal hover:text-neutral-400 transition-colors tracking-tight">Services</a>
+            <a href="#projects" class="text-3xl text-white font-normal hover:text-neutral-400 transition-colors tracking-tight">Projects</a>
+            <a href="#testimonials" class="text-3xl text-white font-normal hover:text-neutral-400 transition-colors tracking-tight">Testimonials</a>
+
+            <a href="#" class="mt-8 hover:bg-neutral-200 transition-colors text-sm font-normal text-black bg-white rounded-full px-8 py-3.5 shadow-sm">Start Project</a>
+        </div>
+    </div>
+
+    <!-- Main Hero Section -->
+    <main id="start" class="md:px-12 pt-40 lg:pt-48 grid grid-cols-1 lg:grid-cols-12 lg:gap-24 max-w-[90rem] mx-auto z-10 py-16 px-6 relative gap-12 items-center min-h-[90vh]">
+
+        <!-- Left Content -->
+        <div class="lg:col-span-7 flex flex-col items-center lg:items-start text-center lg:text-left">
+            <span class="px-4 py-1.5 text-xs font-normal text-white bg-white/5 backdrop-blur-sm rounded-full mb-8 border border-white/10 tracking-wide">Welcome to my space...</span>
+            <h1 class="text-4xl sm:text-6xl lg:text-[5rem] leading-[1.05] font-normal text-white tracking-tight">
+                Crafting digital products with a focus on real-world impact.
+            </h1>
+        </div>
+
+        <!-- Right Content -->
+        <div class="lg:col-span-5 flex flex-col lg:items-end text-center lg:text-right pt-6 lg:pt-0">
+            <div class="max-w-md w-full mx-auto lg:mx-0">
+                <div class="text-base text-neutral-300 leading-relaxed mb-10 flex flex-col sm:flex-row lg:flex-row items-center lg:items-start lg:justify-end gap-4 font-light">
+                    <span class="relative flex h-2 w-2 mt-2 flex-shrink-0">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-40"></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2 bg-white/80"></span>
+                    </span>
+                    <p class="text-center sm:text-left lg:text-right">
+                        A <em class="text-white not-italic font-normal"> Software Engineer</em> based in Peru, focused on creating scalable, user-driven platforms—currently developing AI tools to empower educators.
+                    </p>
+                </div>
+
+                <div class="flex justify-center lg:justify-end gap-4">
+                    <button class="inline-flex items-center justify-center gap-2 bg-white text-black px-8 py-3.5 rounded-full text-sm font-normal hover:bg-neutral-200 transition-all duration-300 hover:scale-105 active:scale-95 shadow-lg">
+                        Let's Talk
+                        <iconify-icon icon="solar:arrow-right-linear" class="text-base"></iconify-icon>
+                    </button>
+                    <a href="#projects" class="inline-flex items-center justify-center gap-2 bg-white/5 backdrop-blur-sm text-white border border-white/20 px-8 py-3.5 rounded-full text-sm font-normal hover:bg-white/10 transition-all duration-300" role="button">
+                        View Work
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Scroll Indicator & Images -->
+    <section class="relative z-10 max-w-[90rem] mx-auto px-6 md:px-12 pb-24 pt-10">
+
+        <!-- Scroll Down Prompt -->
+        <div class="flex flex-col items-center justify-center mb-16 opacity-60">
+            <span class="text-sm text-neutral-400 mb-5 font-normal tracking-wide">Explore More</span>
+            <div class="w-8 h-12 rounded-full border border-white/10 flex items-center justify-center relative bg-black/20 backdrop-blur-md">
+                <div class="animate-bounce mt-1">
+                    <iconify-icon icon="solar:arrow-down-linear" class="text-neutral-400 text-sm"></iconify-icon>
+                </div>
+            </div>
+        </div>
+
+     <!-- About Section -->
+    <section id="about" class="max-w-[90rem] mx-auto px-6 md:px-12 py-20 lg:py-24 relative z-10">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-start">
+
+            <div class="lg:col-span-4 flex justify-start">
+                <div class="inline-flex items-center gap-2.5 px-4 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm shadow-sm">
+                    <iconify-icon icon="solar:stars-linear" class="text-white text-sm"></iconify-icon>
+                    <span class="text-xs font-normal text-neutral-300 uppercase tracking-widest">About Me</span>
+                </div>
+            </div>
+
+            <div class="lg:col-span-8 flex flex-col max-w-3xl">
+                <h2 class="text-3xl md:text-5xl lg:text-[3rem] font-normal tracking-tight text-white mb-12 leading-[1.15]">
+                    I Specialize In Turning Vision <span class="text-neutral-500">Into Reality With Minimalist Precision</span>
+                </h2>
+
+                <div class="flex items-center p-1.5 rounded-full border border-white/10 bg-black/40 w-full max-w-lg mb-16 backdrop-blur-md">
+                    <button id="timeline-tab-work" type="button" onclick="setAboutTimeline('work')" aria-pressed="true" class="flex-1 py-2.5 px-6 rounded-full bg-white text-black text-sm font-normal transition-all shadow-sm">Work Experience</button>
+                    <button id="timeline-tab-education" type="button" onclick="setAboutTimeline('education')" aria-pressed="false" class="flex-1 py-2.5 px-6 rounded-full text-neutral-400 hover:text-white hover:bg-white/5 text-sm font-normal transition-all">My Education</button>
+                </div>
+
+                <div id="timeline-work" class="flex flex-col">
+                    <div class="relative pl-10 pb-14 group">
+                        <div class="absolute left-0 top-8 bottom-0 w-px bg-white/10 -translate-x-1/2"></div>
+                        <div class="absolute left-0 top-1.5 w-4 h-4 -translate-x-1/2 rounded-full bg-black flex items-center justify-center border border-white/20">
+                            <div class="w-1.5 h-1.5 rounded-full bg-white"></div>
+                        </div>
+                        <div>
+                            <h3 class="text-xl md:text-2xl font-normal text-white tracking-tight">Software Engineer Intern at Luz del Sur (subsidiary of China Three Gorges Corporation)
+                            </h3>
+                            <p class="text-sm text-neutral-500 mt-2 font-light">December  2024 - Present</p>
+                            <p class="text-base text-neutral-400 mt-4 leading-relaxed max-w-2xl font-light">
+                                Full Stack Developer specializing in .NET and Python, building scalable web applications and automation solutions to streamline processes and improve efficiency.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="relative pl-10 pb-14 group">
+                        <div class="absolute left-0 top-0 h-1.5 w-px bg-white/10 -translate-x-1/2"></div>
+                        <div class="absolute left-0 top-8 bottom-0 w-px bg-white/10 -translate-x-1/2"></div>
+                        <div class="absolute left-0 top-1.5 w-4 h-4 -translate-x-1/2 rounded-full bg-black flex items-center justify-center border border-white/20">
+                            <div class="w-1.5 h-1.5 rounded-full bg-white/50 group-hover:bg-white transition-colors"></div>
+                        </div>
+                        <div>
+                            <h3 class="text-xl md:text-2xl font-normal text-white tracking-tight">Junior Developer at Software Ideas</h3>
+                            <p class="text-sm text-neutral-500 mt-2 font-light">July 2024 - December 2024</p>
+                            <p class="text-base text-neutral-400 mt-4 leading-relaxed max-w-2xl font-light">
+                                Full Stack JavaScript Developer delivering end-to-end web applications with a focus on performance, scalability, and user experience.
+                            </p>
+                        </div>
+                    </div>
+                    <!--
+                    <div class="relative pl-10 group">
+                        <div class="absolute left-0 top-0 h-1.5 w-px bg-white/10 -translate-x-1/2"></div>
+                        <div class="absolute left-0 top-1.5 w-4 h-4 -translate-x-1/2 rounded-full bg-black flex items-center justify-center border border-white/20">
+                            <div class="w-1.5 h-1.5 rounded-full bg-white/50 group-hover:bg-white transition-colors"></div>
+                        </div>
+                        <div>
+                            <h3 class="text-xl md:text-2xl font-normal text-white tracking-tight">Visual Designer At Google</h3>
+                            <p class="text-sm text-neutral-500 mt-2 font-light">February 2016 - November 2018</p>
+                            <p class="text-base text-neutral-400 mt-4 leading-relaxed max-w-2xl font-light">
+                                Find Product Photography Canada Large Selection, always sell, cheap prices, full offer, store online, compare online, simple search. The best choose, compare simply.
+                            </p>
+                        </div>
+                    </div>
+                    -->
+                </div>
+
+                <div id="timeline-education" class="hidden flex-col">
+                    <div class="relative pl-10 pb-14 group">
+                        <div class="absolute left-0 top-8 bottom-0 w-px bg-white/10 -translate-x-1/2"></div>
+                        <div class="absolute left-0 top-1.5 w-4 h-4 -translate-x-1/2 rounded-full bg-black flex items-center justify-center border border-white/20">
+                            <div class="w-1.5 h-1.5 rounded-full bg-white"></div>
+                        </div>
+                        <div>
+                            <h3 class="text-xl md:text-2xl font-normal text-white tracking-tight">Bachelor of Software Engineer  at Universidad Peruana de Ciencias Aplicadas</h3>
+                            <p class="text-sm text-neutral-500 mt-2 font-light">March 2020 - Dec 2026</p>
+                            <p class="text-base text-neutral-400 mt-4 leading-relaxed max-w-2xl font-light">
+                                Learned the complete software development lifecycle, including architecture design, project management, and industry best practices.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="relative pl-10 pb-14 group">
+                        <div class="absolute left-0 top-0 h-1.5 w-px bg-white/10 -translate-x-1/2"></div>
+                        <div class="absolute left-0 top-8 bottom-0 w-px bg-white/10 -translate-x-1/2"></div>
+                        <div class="absolute left-0 top-1.5 w-4 h-4 -translate-x-1/2 rounded-full bg-black flex items-center justify-center border border-white/20">
+                            <div class="w-1.5 h-1.5 rounded-full bg-white/50 group-hover:bg-white transition-colors"></div>
+                        </div>
+                        <div>
+                            <h3 class="text-xl md:text-2xl font-normal text-white tracking-tight">Artificial Intelligence and Software Development - Universidad de los Andes</h3>
+                            <p class="text-sm text-neutral-500 mt-2 font-light">August 2025</p>
+                            <p class="text-base text-neutral-400 mt-4 leading-relaxed max-w-2xl font-light">
+                                Experience designing AI pipelines with LangChain, consuming and orchestrating LLMs, and building applications powered by modern AI technologies.
+                            </p>
+                        </div>
+                    </div>
+                    <!-- <div class="relative pl-10 group">
+                        <div class="absolute left-0 top-0 h-1.5 w-px bg-white/10 -translate-x-1/2"></div>
+                        <div class="absolute left-0 top-1.5 w-4 h-4 -translate-x-1/2 rounded-full bg-black flex items-center justify-center border border-white/20">
+                            <div class="w-1.5 h-1.5 rounded-full bg-white/50 group-hover:bg-white transition-colors"></div>
+                        </div>
+                        <div>
+                            <h3 class="text-xl md:text-2xl font-normal text-white tracking-tight">Product Strategy Program - University of Toronto SCS</h3>
+                            <p class="text-sm text-neutral-500 mt-2 font-light">January 2020 - August 2020</p>
+                            <p class="text-base text-neutral-400 mt-4 leading-relaxed max-w-2xl font-light">
+                                Strengthened product thinking, stakeholder alignment, and roadmap planning for scalable SaaS products.
+                            </p>
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="max-w-[90rem] mx-auto px-6 md:px-12 py-20 lg:py-24 relative z-10">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start mb-16 lg:mb-20">
+            <div class="lg:col-span-4 flex justify-start">
+                <div class="inline-flex items-center gap-2.5 px-4 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm shadow-sm">
+                    <iconify-icon icon="solar:stars-linear" class="text-white text-sm"></iconify-icon>
+                    <span class="text-xs font-normal text-neutral-300 uppercase tracking-widest">My Services</span>
+                </div>
+            </div>
+
+            <div class="lg:col-span-8 flex flex-col">
+                <h2 class="text-3xl md:text-5xl lg:text-[3rem] font-normal tracking-tight text-white leading-[1.15]">
+                    Building Scalable Digital Products With<br class="hidden xl:block">
+                    <span class="text-neutral-500">Clean Architecture and Purposeful Execution</span>
+                </h2>
+            </div>
+        </div>
+
+        <div class="flex flex-col w-full">
+            <div class="border-t border-white/10 py-8 lg:py-10 group" id="service-1">
+                <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6 cursor-pointer" onclick="toggleAccordion('service-1')">
+                    <div class="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-8">
+                        <div class="flex items-baseline gap-4 sm:gap-6 w-full sm:w-auto">
+                            <span class="text-lg md:text-xl text-neutral-600 font-light tracking-tight shrink-0">01</span>
+                            <h3 class="text-2xl md:text-4xl font-normal text-white tracking-tight group-[.collapsed]:text-neutral-500 transition-colors duration-300">SaaS Development</h3>
+                        </div>
+                        <div class="flex flex-wrap gap-2.5 opacity-100 transition-opacity duration-300 group-[.collapsed]:opacity-0 pointer-events-none group-[.collapsed]:pointer-events-none mt-2 sm:mt-0">
+                            <span class="px-3 py-1.5 rounded-full border border-white/10 bg-white/5 text-neutral-300 text-xs font-light tracking-wide backdrop-blur-sm">Full Stack</span>
+                            <span class="px-3 py-1.5 rounded-full border border-white/10 bg-white/5 text-neutral-300 text-xs font-light tracking-wide backdrop-blur-sm">Deployment & Integrations</span>
+                        </div>
+                    </div>
+                    <button class="inline-flex items-center justify-between min-w-[110px] px-5 py-2.5 rounded-full border transition-all duration-300 self-start lg:self-auto text-xs font-normal border-white/20 bg-white/10 text-white group-[.collapsed]:border-transparent group-[.collapsed]:bg-transparent group-[.collapsed]:text-neutral-500 group-[.collapsed]:hover:text-white group-[.collapsed]:hover:bg-white/5">
+                        <span class="block group-[.collapsed]:hidden">Collapse</span>
+                        <span class="hidden group-[.collapsed]:block">Expand</span>
+                        <iconify-icon icon="solar:alt-arrow-up-linear" class="text-sm ml-2 transition-transform duration-500 group-[.collapsed]:rotate-180 text-white group-[.collapsed]:text-inherit"></iconify-icon>
+                    </button>
+                </div>
+                <div class="accordion-content group-[.collapsed]:collapsed">
+                    <div class="accordion-inner">
+                        <div class="pt-8 md:pt-12 flex flex-col items-center">
+                            <p class="text-base md:text-lg text-neutral-400 leading-relaxed max-w-4xl text-left mr-auto mb-10 font-light">
+                                I turn ideas into validated SaaS features by understanding user needs, testing concepts early, and building solutions that solve real problems.
+                            </p>
+                            <div class="w-full rounded-[2rem] overflow-hidden border border-white/5 bg-neutral-900/50 aspect-[4/3] md:aspect-[21/9] relative group-hover:border-white/10 transition-colors duration-500">
+                                <div class="absolute inset-0 bg-black/40 z-10 pointer-events-none mix-blend-overlay"></div>
+                                <img src="https://images.unsplash.com/photo-1618761714954-0b8cd0026356?q=80&amp;w=2564&amp;auto=format&amp;fit=crop" alt="Mobile UI Design Mockups" class="w-full h-full object-cover object-center scale-100 transition-transform duration-1000 group-hover:scale-105 opacity-80 group-hover:opacity-100 grayscale hover:grayscale-0">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-t border-white/10 py-8 lg:py-10 group collapsed" id="service-2">
+                <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6 cursor-pointer" onclick="toggleAccordion('service-2')">
+                    <div class="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-8">
+                        <div class="flex items-baseline gap-4 sm:gap-6 w-full sm:w-auto">
+                            <span class="text-lg md:text-xl text-neutral-600 font-light tracking-tight shrink-0">02</span>
+                            <h3 class="text-2xl md:text-4xl font-normal text-white tracking-tight group-[.collapsed]:text-neutral-500 transition-colors duration-300">AI-Powered Applications</h3>
+                        </div>
+                        <div class="flex flex-wrap gap-2.5 opacity-100 transition-opacity duration-300 group-[.collapsed]:opacity-0 pointer-events-none group-[.collapsed]:pointer-events-none mt-2 sm:mt-0">
+                            <span class="px-3 py-1.5 rounded-full border border-white/10 bg-white/5 text-neutral-300 text-xs font-light tracking-wide backdrop-blur-sm">LLM integrations</span>
+                            <span class="px-3 py-1.5 rounded-full border border-white/10 bg-white/5 text-neutral-300 text-xs font-light tracking-wide backdrop-blur-sm">LangChain pipelines</span>
+                        </div>
+                    </div>
+                    <button class="inline-flex items-center justify-between min-w-[110px] px-5 py-2.5 rounded-full border transition-all duration-300 self-start lg:self-auto text-xs font-normal border-white/20 bg-white/10 text-white group-[.collapsed]:border-transparent group-[.collapsed]:bg-transparent group-[.collapsed]:text-neutral-500 group-[.collapsed]:hover:text-white group-[.collapsed]:hover:bg-white/5">
+                        <span class="block group-[.collapsed]:hidden">Collapse</span>
+                        <span class="hidden group-[.collapsed]:block">Expand</span>
+                        <iconify-icon icon="solar:alt-arrow-up-linear" class="text-sm ml-2 transition-transform duration-500 group-[.collapsed]:rotate-180 text-white group-[.collapsed]:text-inherit"></iconify-icon>
+                    </button>
+                </div>
+                <div class="accordion-content group-[.collapsed]:collapsed">
+                    <div class="accordion-inner">
+                        <div class="pt-8 md:pt-12 flex flex-col items-center">
+                            <p class="text-base md:text-lg text-neutral-400 leading-relaxed max-w-4xl text-left mr-auto mb-10 font-light">
+                                I build end-to-end AI solutions, from LLM integration to scalable deployment, enabling businesses to unlock the full potential of AI.
+                            </p>
+                            <div class="w-full rounded-[2rem] overflow-hidden border border-white/5 bg-neutral-900/50 aspect-[4/3] md:aspect-[21/9] relative">
+                                <div class="absolute inset-0 flex items-center justify-center text-neutral-600 text-sm font-light tracking-widest uppercase">Project Showcase Pending</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-y border-white/10 py-8 lg:py-10 group collapsed" id="service-3">
+                <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6 cursor-pointer" onclick="toggleAccordion('service-3')">
+                    <div class="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-8">
+                        <div class="flex items-baseline gap-4 sm:gap-6 w-full sm:w-auto">
+                            <span class="text-lg md:text-xl text-neutral-600 font-light tracking-tight shrink-0">03</span>
+                            <h3 class="text-2xl md:text-4xl font-normal text-white tracking-tight group-[.collapsed]:text-neutral-500 transition-colors duration-300">Automation</h3>
+                        </div>
+                        <div class="flex flex-wrap gap-2.5 opacity-100 transition-opacity duration-300 group-[.collapsed]:opacity-0 pointer-events-none group-[.collapsed]:pointer-events-none mt-2 sm:mt-0">
+                            <span class="px-3 py-1.5 rounded-full border border-white/10 bg-white/5 text-neutral-300 text-xs font-light tracking-wide backdrop-blur-sm">Workflows</span>
+                            <span class="px-3 py-1.5 rounded-full border border-white/10 bg-white/5 text-neutral-300 text-xs font-light tracking-wide backdrop-blur-sm">Internal tools</span>
+                        </div>
+                    </div>
+                    <button class="inline-flex items-center justify-between min-w-[110px] px-5 py-2.5 rounded-full border transition-all duration-300 self-start lg:self-auto text-xs font-normal border-white/20 bg-white/10 text-white group-[.collapsed]:border-transparent group-[.collapsed]:bg-transparent group-[.collapsed]:text-neutral-500 group-[.collapsed]:hover:text-white group-[.collapsed]:hover:bg-white/5">
+                        <span class="block group-[.collapsed]:hidden">Collapse</span>
+                        <span class="hidden group-[.collapsed]:block">Expand</span>
+                        <iconify-icon icon="solar:alt-arrow-up-linear" class="text-sm ml-2 transition-transform duration-500 group-[.collapsed]:rotate-180 text-white group-[.collapsed]:text-inherit"></iconify-icon>
+                    </button>
+                </div>
+                <div class="accordion-content group-[.collapsed]:collapsed">
+                    <div class="accordion-inner">
+                        <div class="pt-8 md:pt-12 flex flex-col items-center">
+                            <p class="text-base md:text-lg text-neutral-400 leading-relaxed max-w-4xl text-left mr-auto mb-10 font-light">
+                                I build intelligent automation solutions that connect systems, streamline operations, and scale business processes efficiently.
+                            </p>
+                            <div class="w-full rounded-[2rem] overflow-hidden border border-white/5 bg-neutral-900/50 aspect-[4/3] md:aspect-[21/9] relative">
+                                <div class="absolute inset-0 flex items-center justify-center text-neutral-600 text-sm font-light tracking-widest uppercase">Project Showcase Pending</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Recent Projects Section -->
+    <section id="projects" class="max-w-[90rem] mx-auto px-6 md:px-12 py-20 lg:py-24 relative z-10">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start mb-16">
+            <div class="lg:col-span-4 flex justify-start">
+                <div class="inline-flex items-center gap-2.5 px-4 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm shadow-sm">
+                    <iconify-icon icon="solar:stars-linear" class="text-white text-sm"></iconify-icon>
+                    <span class="text-xs font-normal text-neutral-300 uppercase tracking-widest">My Recent Projects</span>
+                </div>
+            </div>
+
+            <div class="lg:col-span-8 flex flex-col">
+                <h2 class="text-3xl md:text-5xl lg:text-[3rem] font-normal tracking-tight text-white leading-[1.15]">
+                    A Selection Of  Products<br class="hidden sm:block">
+                    I’ve <span class="text-neutral-500">Designed and Built</span>
+                </h2>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-5 mb-16">
+            <div class="bg-white/5 border border-white/10 rounded-[2rem] p-8 md:p-12 flex flex-col justify-between h-full backdrop-blur-md">
+                <div class="flex flex-col items-start">
+                    <div class="flex flex-wrap gap-2.5 mb-14">
+                        <span class="px-3 py-1.5 rounded-full border border-white/10 bg-black/40 text-neutral-300 text-xs font-light tracking-wide shadow-sm hover:text-white transition-colors cursor-default">NestJs</span>
+                        <span class="px-3 py-1.5 rounded-full border border-white/10 bg-black/40 text-neutral-300 text-xs font-light tracking-wide shadow-sm hover:text-white transition-colors cursor-default">VueJs</span>
+                        <span class="px-3 py-1.5 rounded-full border border-white/10 bg-black/40 text-neutral-300 text-xs font-light tracking-wide shadow-sm hover:text-white transition-colors cursor-default">Deployment</span>
+                    </div>
+
+                    <div class="mb-8 w-full">
+                        <p class="text-xs text-neutral-400 font-normal tracking-widest uppercase mb-4 flex items-center gap-2">
+                            Project Timeline
+                            <span class="w-1 h-1 rounded-full bg-neutral-600"></span>
+                            (11/03/2025 - 05/06/2025)
+                        </p>
+                        <h3 class="text-2xl md:text-[2.5rem] font-normal text-white tracking-tight leading-[1.15] mb-6">TRIPHASIK APP - High Performance Gym Management App</h3>
+                        <p class="text-base md:text-lg text-neutral-400 leading-relaxed mb-8 font-light">
+                            Built to simplify gym operations and improve athlete experience, the platform allows users to book sessions and track progress, while enabling staff to manage schedules, assign sessions, and control user access seamlessly.                        </p>
+                        <p class="text-base text-neutral-300 italic font-light">
+                            "Do you have a project idea in mind?"
+                        </p>
+                    </div>
+                </div>
+
+                <div class="mt-8">
+                    <button class="inline-flex items-center justify-center gap-2 bg-white text-black px-7 py-3 rounded-full text-sm font-normal hover:bg-neutral-200 transition-all duration-300 hover:scale-105 active:scale-95 shadow-sm">
+                        View Study
+                        <iconify-icon icon="solar:arrow-right-linear" class="text-sm"></iconify-icon>
+                    </button>
+                </div>
+            </div>
+
+            <div class="rounded-[2rem] overflow-hidden bg-neutral-900 border border-white/5 relative min-h-[400px] lg:min-h-[600px] h-full group">
+                <div class="absolute inset-0 bg-black/30 z-10 pointer-events-none mix-blend-overlay"></div>
+                <img src="https://images.unsplash.com/photo-1618761714954-0b8cd0026356?q=80&amp;w=2564&amp;auto=format&amp;fit=crop" alt="Mobile App UI Mockups" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105 ease-out opacity-80 group-hover:opacity-100 grayscale hover:grayscale-0">
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-5 mb-16">
+            <div class="bg-white/5 border border-white/10 rounded-[2rem] p-8 md:p-12 flex flex-col justify-between h-full backdrop-blur-md">
+                <div class="flex flex-col items-start">
+                    <div class="flex flex-wrap gap-2.5 mb-14">
+                        <span class="px-3 py-1.5 rounded-full border border-white/10 bg-black/40 text-neutral-300 text-xs font-light tracking-wide shadow-sm hover:text-white transition-colors cursor-default">NextJs</span>
+                        <span class="px-3 py-1.5 rounded-full border border-white/10 bg-black/40 text-neutral-300 text-xs font-light tracking-wide shadow-sm hover:text-white transition-colors cursor-default">Deployment</span>
+                    </div>
+
+                    <div class="mb-8 w-full">
+                        <p class="text-xs text-neutral-400 font-normal tracking-widest uppercase mb-4 flex items-center gap-2">
+                            Project Timeline
+                            <span class="w-1 h-1 rounded-full bg-neutral-600"></span>
+                            (20/01/2026 - 02/02/2026)
+                        </p>
+                        <h3 class="text-2xl md:text-[2.5rem] font-normal text-white tracking-tight leading-[1.15] mb-6">HUBCAPITAL - Digital Experience for a Financial Company</h3>
+                        <p class="text-base md:text-lg text-neutral-400 leading-relaxed mb-8 font-light">
+                            Developed a high-converting landing page with anti-spam protection, enabling secure lead capture through a form integrated directly with the client’s CRM.
+                        </p>
+                        <p class="text-base text-neutral-300 italic font-light">
+                            "Do you have a project idea in mind?"
+                        </p>
+                    </div>
+                </div>
+
+                <div class="mt-8">
+                    <button class="inline-flex items-center justify-center gap-2 bg-white text-black px-7 py-3 rounded-full text-sm font-normal hover:bg-neutral-200 transition-all duration-300 hover:scale-105 active:scale-95 shadow-sm">
+                        View Study
+                        <iconify-icon icon="solar:arrow-right-linear" class="text-sm"></iconify-icon>
+                    </button>
+                </div>
+            </div>
+
+            <div class="rounded-[2rem] overflow-hidden bg-neutral-900 border border-white/5 relative min-h-[400px] lg:min-h-[600px] h-full group">
+                <div class="absolute inset-0 bg-black/30 z-10 pointer-events-none mix-blend-overlay"></div>
+                <img src="https://images.unsplash.com/photo-1618761714954-0b8cd0026356?q=80&amp;w=2564&amp;auto=format&amp;fit=crop" alt="Mobile App UI Mockups" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105 ease-out opacity-80 group-hover:opacity-100 grayscale hover:grayscale-0">
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-5 mb-16">
+            <div class="bg-white/5 border border-white/10 rounded-[2rem] p-8 md:p-12 flex flex-col justify-between h-full backdrop-blur-md">
+                <div class="flex flex-col items-start">
+                    <div class="flex flex-wrap gap-2.5 mb-14">
+                        <span class="px-3 py-1.5 rounded-full border border-white/10 bg-black/40 text-neutral-300 text-xs font-light tracking-wide shadow-sm hover:text-white transition-colors cursor-default">AI</span>
+                        <span class="px-3 py-1.5 rounded-full border border-white/10 bg-black/40 text-neutral-300 text-xs font-light tracking-wide shadow-sm hover:text-white transition-colors cursor-default">LLM</span>
+                        <span class="px-3 py-1.5 rounded-full border border-white/10 bg-black/40 text-neutral-300 text-xs font-light tracking-wide shadow-sm hover:text-white transition-colors cursor-default">RAG</span>
+                    </div>
+
+                    <div class="mb-8 w-full">
+                        <p class="text-xs text-neutral-400 font-normal tracking-widest uppercase mb-4 flex items-center gap-2">
+                            Project Timeline
+                            <span class="w-1 h-1 rounded-full bg-neutral-600"></span>
+                            (17/03/2026 - In Progress)
+                        </p>
+                        <h3 class="text-2xl md:text-[2.5rem] font-normal text-white tracking-tight leading-[1.15] mb-6">EDUKHIPU - Offline AI Learning Platform for Low-Connectivity Environments</h3>
+                        <p class="text-base md:text-lg text-neutral-400 leading-relaxed mb-8 font-light">
+                            EduKhipu is an offline-first AI learning platform designed to provide personalized educational support in low-connectivity and rural environments. Built as a self-hosted solution, EduKhipu aims to bridge the digital divide by making high-quality, AI-powered learning accessible anywhere. </p>
+                        <p class="text-base text-neutral-300 italic font-light">
+                            "Do you have a project idea in mind?"
+                        </p>
+                    </div>
+                </div>
+
+                <div class="mt-8">
+                    <button class="inline-flex items-center justify-center gap-2 bg-white text-black px-7 py-3 rounded-full text-sm font-normal hover:bg-neutral-200 transition-all duration-300 hover:scale-105 active:scale-95 shadow-sm">
+                        View Study
+                        <iconify-icon icon="solar:arrow-right-linear" class="text-sm"></iconify-icon>
+                    </button>
+                </div>
+            </div>
+
+            <div class="rounded-[2rem] overflow-hidden bg-neutral-900 border border-white/5 relative min-h-[400px] lg:min-h-[600px] h-full group">
+                <div class="absolute inset-0 bg-black/30 z-10 pointer-events-none mix-blend-overlay"></div>
+                <img src="https://images.unsplash.com/photo-1618761714954-0b8cd0026356?q=80&amp;w=2564&amp;auto=format&amp;fit=crop" alt="Mobile App UI Mockups" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105 ease-out opacity-80 group-hover:opacity-100 grayscale hover:grayscale-0">
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="w-full bg-black/40 border-y border-white/5 relative overflow-hidden py-24 lg:py-32 backdrop-blur-sm z-10">
+        <!-- Background wireframe globe -->
+        <div class="absolute -bottom-[20%] -right-[5%] w-[60%] max-w-[800px] aspect-square pointer-events-none text-white/5">
+            <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" class="w-full h-full" fill="none" stroke="currentColor" stroke-width="0.5">
+                <circle cx="100" cy="100" r="95"></circle>
+                <ellipse cx="100" cy="100" rx="30" ry="95"></ellipse>
+                <ellipse cx="100" cy="100" rx="60" ry="95"></ellipse>
+                <ellipse cx="100" cy="100" rx="95" ry="30"></ellipse>
+                <ellipse cx="100" cy="100" rx="95" ry="60"></ellipse>
+                <line x1="5" y1="100" x2="195" y2="100"></line>
+                <line x1="100" y1="5" x2="100" y2="195"></line>
+            </svg>
+        </div>
+
+        <div class="max-w-[90rem] mx-auto px-6 md:px-12 relative z-10 flex flex-col lg:flex-row gap-16 lg:gap-32">
+
+            <!-- Left Column: Badge & Navigation -->
+            <div class="flex flex-col justify-between items-start lg:w-1/3 min-h-[12rem] lg:min-h-[24rem]">
+                <!-- Badge -->
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 shadow-sm border border-white/10 backdrop-blur-sm">
+                    <iconify-icon icon="solar:stars-linear" class="text-white text-sm"></iconify-icon>
+                    <span class="text-xs font-normal text-neutral-300 tracking-widest uppercase">Client Testimonial</span>
+                </div>
+
+                <!-- Navigation Arrows -->
+                <div class="flex items-center gap-4 mt-12 lg:mt-0">
+                    <button id="testimonial-prev-btn" type="button" aria-label="Previous testimonial" class="w-12 h-12 bg-white/5 rounded-full flex items-center justify-center hover:bg-white/10 active:scale-95 transition-all border border-white/10 text-white group backdrop-blur-sm">
+                        <iconify-icon icon="solar:arrow-left-linear" class="text-lg group-hover:-translate-x-1 transition-transform"></iconify-icon>
+                    </button>
+                    <button id="testimonial-next-btn" type="button" aria-label="Next testimonial" class="w-12 h-12 bg-white/5 rounded-full flex items-center justify-center hover:bg-white/10 active:scale-95 transition-all border border-white/10 text-white group backdrop-blur-sm">
+                        <iconify-icon icon="solar:arrow-right-linear" class="text-lg group-hover:translate-x-1 transition-transform"></iconify-icon>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Right Column: Quote -->
+            <div id="testimonial-content" class="testimonial-content flex flex-col lg:w-2/3 max-w-4xl">
+                <!-- Large Quote Icon -->
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="currentColor" class="text-neutral-700 mb-8 lg:-ml-1">
+                    <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"></path>
+                </svg>
+
+                <!-- Testimonial Text -->
+                <h3 id="testimonial-quote" class="text-2xl md:text-3xl lg:text-[2.25rem] leading-[1.4] font-normal tracking-tight text-white mb-12">
+                    <span id="testimonial-quote-main">They Bring Visions To Life With Precision-Crafted Architecture And Interior Design.</span>
+                    <span id="testimonial-quote-highlight" class="text-neutral-500 font-light">Discover Our Portfolio Of Innovative Best Projects That Redefine Creativity And Functionality.</span>
+                </h3>
+
+                <!-- Author Profile -->
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-full border border-white/20 shadow-sm overflow-hidden bg-neutral-800 flex-shrink-0">
+                        <img id="testimonial-author-image" src="https://i.pravatar.cc/150?u=a042581f4e29026704d" alt="Robert Hobbs" class="w-full h-full object-cover grayscale">
+                    </div>
+                    <div class="flex flex-col">
+                        <span id="testimonial-author-name" class="text-base font-normal text-white tracking-tight">Robert Hobbs</span>
+                        <span id="testimonial-author-role" class="text-xs font-light text-neutral-400">Managing Director</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer class="bg-black pt-20 pb-10 px-6 md:px-12 relative z-10">
+        <div class="max-w-[90rem] mx-auto flex flex-col gap-16">
+
+            <!-- Top Section -->
+            <div class="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-10">
+                <div class="max-w-3xl flex flex-col gap-6">
+                    <h2 class="text-3xl md:text-5xl lg:text-[4rem] font-normal tracking-tight text-white leading-[1.1]">
+                        Have a project in mind? <br>
+                        <span class="text-neutral-500">Let's build it together.</span>
+                    </h2>
+                    <a href="mailto:hello@example.com" class="text-lg md:text-xl text-neutral-300 hover:text-white transition-colors inline-flex items-center gap-2 self-start border-b border-white/20 hover:border-white pb-1 font-light">
+                        hello@janiel.design
+                        <iconify-icon icon="solar:arrow-right-up-linear" class="text-lg"></iconify-icon>
+                    </a>
+                </div>
+
+                <div class="flex gap-4">
+                     <button class="inline-flex items-center justify-center gap-2 bg-white text-black px-8 py-3.5 rounded-full text-sm font-normal hover:bg-neutral-200 transition-all duration-300 hover:scale-105 active:scale-95 shadow-sm">
+                        Start a Project
+                    </button>
+                </div>
+            </div>
+
+            <!-- Divider -->
+            <div class="w-full h-px bg-white/10"></div>
+
+            <!-- Bottom Section -->
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6 text-sm text-neutral-500 font-light">
+                <div class="flex items-center gap-2">
+                    <span>© 2024 Janiel Franz. All rights reserved.</span>
+                </div>
+
+                <div class="flex gap-8">
+                    <a href="#" class="hover:text-white transition-colors">Privacy Policy</a>
+                    <a href="#" class="hover:text-white transition-colors">Terms of Service</a>
+                </div>
+
+                <div class="flex items-center space-x-3">
+                    <a href="#" class="p-2.5 rounded-full bg-white/5 hover:bg-white/10 transition-colors border border-white/5 hover:text-white">
+                        <iconify-icon icon="solar:link-circle-linear" class="text-base"></iconify-icon>
+                    </a>
+                    <a href="#" class="p-2.5 rounded-full bg-white/5 hover:bg-white/10 transition-colors border border-white/5 hover:text-white">
+                        <iconify-icon icon="solar:case-minimalistic-linear" class="text-base"></iconify-icon>
+                    </a>
+                    <a href="#" class="p-2.5 rounded-full bg-white/5 hover:bg-white/10 transition-colors border border-white/5 hover:text-white">
+                        <iconify-icon icon="solar:camera-linear" class="text-base"></iconify-icon>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+
+    <script>
+        const LANGUAGE_STORAGE_KEY = 'site-language-v1';
+        const SUPPORTED_LANGUAGES = ['en', 'es'];
+        let translatableNodes = [];
+        let currentTestimonialIndex = 0;
+        let isTestimonialAnimating = false;
+
+        const TESTIMONIALS = {
+            en: [
+                {
+                    quoteMain: 'They Bring Visions To Life With Precision-Crafted Architecture And Interior Design.',
+                    quoteHighlight: 'Discover Our Portfolio Of Innovative Best Projects That Redefine Creativity And Functionality.',
+                    name: 'Fernanda Watanabe',
+                    role: 'Owner & CEO',
+                    avatar: 'https://i.pravatar.cc/150?u=a042581f4e29026704d'
+                },
+                {
+                    quoteMain: 'The team transformed our product direction with a clear UX strategy and confident execution.',
+                    quoteHighlight: 'From discovery to delivery, every decision felt intentional, elegant, and measurable.',
+                    name: 'Dante Paquiyauri',
+                    role: 'Marketing Manager',
+                    avatar: 'https://i.pravatar.cc/150?u=a042581f4e29026703d'
+                }
+            ],
+            es: [
+                {
+                    quoteMain: 'Llevan las visiones a la vida con arquitectura e interiorismo de precision.',
+                    quoteHighlight: 'Descubre nuestro portafolio de proyectos innovadores que redefinen la creatividad y la funcionalidad.',
+                    name: 'Robert Hobbs',
+                    role: 'Director general',
+                    avatar: 'https://i.pravatar.cc/150?u=a042581f4e29026704d'
+                },
+                {
+                    quoteMain: 'El equipo transformo la direccion de nuestro producto con una estrategia UX clara y ejecucion solida.',
+                    quoteHighlight: 'Desde discovery hasta delivery, cada decision se sintio intencional, elegante y medible.',
+                    name: 'Mia Thompson',
+                    role: 'Lider de Producto',
+                    avatar: 'https://i.pravatar.cc/150?u=a042581f4e29026703d'
+                },
+                {
+                    quoteMain: 'Lanzamos mas rapido, reducimos friccion en onboarding y mejoramos activacion durante el primer mes.',
+                    quoteHighlight: 'Su proceso minimalista elimino ruido y ayudo a nuestro equipo a enfocarse en lo que mas importaba.',
+                    name: 'Daniel Park',
+                    role: 'Fundador y CEO',
+                    avatar: 'https://i.pravatar.cc/150?u=a042581f4e29026705d'
+                }
+            ]
+        };
+
+        const TRANSLATIONS = {
+            es: {
+                'Start': 'Inicio',
+                'About me': 'Sobre mí',
+                'Services': 'Servicios',
+                'Projects': 'Proyectos',
+                'Testimonials': 'Testimonios',
+                'Start Project': 'Empezar Proyecto',
+                'Welcome to my space...': 'Bienvenido a mi espacio...',
+                'Crafting digital products with a focus on real-world impact.': 'Creando productos digitales con un enfoque en el impacto del mundo real.',
+                'A': 'Un',
+                'Software Engineer': 'Ingeniero de Software',
+                'based in Peru, focused on creating scalable, user-driven platforms—currently developing AI tools to empower educators.': 'residente en Perú, enfocado en crear plataformas escalables y centradas en el usuario; actualmente desarrollando herramientas de IA para empoderar a los educadores.',
+                "Let's Talk": 'Hablemos',
+                'View Work': 'Ver Trabajos',
+                'Explore More': 'Explora Más',
+                'About Me': 'Sobre Mí',
+                'I Specialize In Turning Vision': 'Me Especializo en Convertir la Visión',
+                'Into Reality With Minimalist Precision': 'en Realidad con Precisión Minimalista',
+                'Work Experience': 'Experiencia Laboral',
+                'My Education': 'Mi Educación',
+                'Software Engineer Intern at Luz del Sur (subsidiary of China Three Gorges Corporation)': 'Pasantía de Ingeniero de Software en Luz del Sur (subsidiaria de China Three Gorges Corporation)',
+                'December 2024 - Present': 'Diciembre 2024 - Presente',
+                'Full Stack Developer specializing in .NET and Python, building scalable web applications and automation solutions to streamline processes and improve efficiency.': 'Desarrollador Full Stack especializado en .NET y Python, construyendo aplicaciones web escalables y soluciones de automatización para optimizar procesos y mejorar la eficiencia.',
+                'Junior Developer at Software Ideas': 'Desarrollador Junior en Software Ideas',
+                'July 2024 - December 2024': 'Julio 2024 - Diciembre 2024',
+                'Full Stack JavaScript Developer delivering end-to-end web applications with a focus on performance, scalability, and user experience.': 'Desarrollador Full Stack de JavaScript entregando aplicaciones web de extremo a extremo con un enfoque en el rendimiento, la escalabilidad y la experiencia del usuario.',
+                'Bachelor of Software Engineer at Universidad Peruana de Ciencias Aplicadas': 'Licenciatura en Ingeniería de Software en la Universidad Peruana de Ciencias Aplicadas',
+                'March 2020 - Dec 2026': 'Marzo 2020 - Diciembre 2026',
+                'Learned the complete software development lifecycle, including architecture design, project management, and industry best practices.': 'Aprendí el ciclo de vida completo del desarrollo de software, incluyendo diseño de arquitectura, gestión de proyectos y mejores prácticas de la industria.',
+                'Artificial Intelligence and Software Development - Universidad de los Andes': 'Inteligencia Artificial y Desarrollo de Software - Universidad de los Andes',
+                'August 2025': 'Agosto 2025',
+                'Experience designing AI pipelines with LangChain, consuming and orchestrating LLMs, and building applications powered by modern AI technologies.': 'Experiencia diseñando pipelines de IA con LangChain, consumiendo y orquestando LLMs, y construyendo aplicaciones impulsadas por tecnologías modernas de IA.',
+                'My Services': 'Mis Servicios',
+                'Building Scalable Digital Products With': 'Construyendo Productos Digitales Escalables Con',
+                'Clean Architecture and Purposeful Execution': 'Arquitectura Limpia y Ejecución con Propósito',
+                'SaaS Development': 'Desarrollo SaaS',
+                'Full Stack': 'Full Stack',
+                'Deployment & Integrations': 'Despliegue e Integraciones',
+                'Collapse': 'Colapsar',
+                'Expand': 'Expandir',
+                'I turn ideas into validated SaaS features by understanding user needs, testing concepts early, and building solutions that solve real problems.': 'Convierto ideas en características SaaS validadas entendiendo las necesidades del usuario, probando conceptos temprano y construyendo soluciones que resuelven problemas reales.',
+                'AI-Powered Applications': 'Aplicaciones Potenciadas por IA',
+                'LLM integrations': 'Integraciones LLM',
+                'LangChain pipelines': 'Pipelines de LangChain',
+                'I build end-to-end AI solutions, from LLM integration to scalable deployment, enabling businesses to unlock the full potential of AI.': 'Construyo soluciones de IA de extremo a extremo, desde la integración de LLM hasta el despliegue escalable, permitiendo a las empresas desbloquear todo el potencial de la IA.',
+                'Project Showcase Pending': 'Muestra de Proyecto Pendiente',
+                'Automation': 'Automatización',
+                'Workflows': 'Flujos de Trabajo',
+                'Internal tools': 'Herramientas Internas',
+                'I build intelligent automation solutions that connect systems, streamline operations, and scale business processes efficiently.': 'Construyo soluciones de automatización inteligentes que conectan sistemas, optimizan operaciones y escalan procesos de negocio de manera eficiente.',
+                'My Recent Projects': 'Mis Proyectos Recientes',
+                'A Selection Of Products': 'Una Selección de Productos',
+                'I’ve': ' Que He',
+                'Designed and Built': 'Diseñado y Construido',
+                'NestJs': 'NestJs',
+                'VueJs': 'VueJs',
+                'Deployment': 'Despliegue',
+                'Project Timeline': 'Cronología del Proyecto',
+                '(11/03/2025 - 05/06/2025)': '(11/03/2025 - 05/06/2025)',
+                'TRIPHASIK APP - High Performance Gym Management App': 'TRIPHASIK APP - Aplicación de Gestión de Gimnasios de Alto Rendimiento',
+                'Built to simplify gym operations and improve athlete experience, the platform allows users to book sessions and track progress, while enabling staff to manage schedules, assign sessions, and control user access seamlessly.': 'Construida para simplificar las operaciones del gimnasio y mejorar la experiencia del atleta, la plataforma permite a los usuarios reservar sesiones y seguir su progreso, mientras que el personal puede gestionar horarios, asignar sesiones y controlar el acceso de los usuarios sin problemas.',
+                '"Do you have a project idea in mind?"': '"¿Tienes una idea de proyecto en mente?"',
+                'View Study': 'Ver Estudio',
+                'NextJs': 'NextJs',
+                '(20/01/2026 - 02/02/2026)': '(20/01/2026 - 02/02/2026)',
+                'HUBCAPITAL - Digital Experience for a Financial Company': 'HUBCAPITAL - Experiencia Digital para una Empresa Financiera',
+                'Developed a high-converting landing page with anti-spam protection, enabling secure lead capture through a form integrated directly with the client’s CRM.': 'Desarrollé una página de destino de alta conversión con protección anti-spam, permitiendo la captura segura de leads a través de un formulario integrado directamente con el CRM del cliente.',
+                'AI': 'IA',
+                'LLM': 'LLM',
+                'RAG': 'RAG',
+                '(17/03/2026 - In Progress)': '(17/03/2026 - En Progreso)',
+                'EDUKHIPU - Offline AI Learning Platform for Low-Connectivity Environments': 'EDUKHIPU - Plataforma de Aprendizaje de IA Offline para Entornos de Baja Conectividad',
+                'EduKhipu is an offline-first AI learning platform designed to provide personalized educational support in low-connectivity and rural environments. Built as a self-hosted solution, EduKhipu aims to bridge the digital divide by making high-quality, AI-powered learning accessible anywhere.': 'EduKhipu es una plataforma de aprendizaje de IA offline diseñada para proporcionar apoyo educativo personalizado en entornos rurales y de baja conectividad. Construida como una solución auto-alojada, EduKhipu tiene como objetivo cerrar la brecha digital haciendo que el aprendizaje de alta calidad impulsado por IA sea accesible en cualquier lugar.',
+                'Client Testimonial': 'Testimonio del Cliente',
+                'They Bring Visions To Life With Precision-Crafted Architecture And Interior Design.': 'Dan vida a las visiones con una arquitectura y un diseño de interiores elaborados con precisión.',
+                'Discover Our Portfolio Of Innovative Best Projects That Redefine Creativity And Functionality.': 'Descubra nuestra cartera de proyectos innovadores que redefinen la creatividad y la funcionalidad.',
+                'Managing Director': 'Director General',
+                'Have a project in mind?': '¿Tienes un proyecto en mente?',
+                "Let's build it together.": 'Construyámoslo juntos.',
+                'Start a Project': 'Empezar un Proyecto',
+                '© 2024 Janiel Franz. All rights reserved.': '© 2024 Janiel Franz. Todos los derechos reservados.',
+                'Privacy Policy': 'Política de Privacidad',
+                'Terms of Service': 'Términos de Servicio'
+            }
+        };
+
+        function normalizeText(text) {
+            return text.replace(/\s+/g, ' ').trim();
+        }
+
+        function collectTranslatableNodes() {
+            const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+                acceptNode(node) {
+                    if (!node.parentElement) return NodeFilter.FILTER_REJECT;
+                    const tag = node.parentElement.tagName;
+                    if (tag === 'SCRIPT' || tag === 'STYLE' || tag === 'NOSCRIPT') {
+                        return NodeFilter.FILTER_REJECT;
+                    }
+                    return normalizeText(node.nodeValue).length > 0
+                        ? NodeFilter.FILTER_ACCEPT
+                        : NodeFilter.FILTER_REJECT;
+                }
+            });
+
+            const nodes = [];
+            while (walker.nextNode()) {
+                const node = walker.currentNode;
+                const value = node.nodeValue;
+                nodes.push({
+                    node,
+                    original: normalizeText(value),
+                    prefix: (value.match(/^\s*/) || [''])[0],
+                    suffix: (value.match(/\s*$/) || [''])[0]
+                });
+            }
+            return nodes;
+        }
+
+        function resolveInitialLanguage() {
+            const saved = localStorage.getItem(LANGUAGE_STORAGE_KEY);
+            if (SUPPORTED_LANGUAGES.includes(saved)) return saved;
+            return navigator.language && navigator.language.toLowerCase().startsWith('es') ? 'es' : 'en';
+        }
+
+        function getCurrentLanguage() {
+            return document.documentElement.lang === 'es' ? 'es' : 'en';
+        }
+
+        function getTestimonialsByLanguage(lang) {
+            return TESTIMONIALS[lang] || TESTIMONIALS.en;
+        }
+
+        function renderCurrentTestimonial() {
+            const items = getTestimonialsByLanguage(getCurrentLanguage());
+            if (!items.length) return;
+            const item = items[currentTestimonialIndex % items.length];
+            const quoteMain = document.getElementById('testimonial-quote-main');
+            const quoteHighlight = document.getElementById('testimonial-quote-highlight');
+            const authorName = document.getElementById('testimonial-author-name');
+            const authorRole = document.getElementById('testimonial-author-role');
+            const authorImage = document.getElementById('testimonial-author-image');
+
+            if (quoteMain) quoteMain.textContent = item.quoteMain;
+            if (quoteHighlight) quoteHighlight.textContent = item.quoteHighlight;
+            if (authorName) authorName.textContent = item.name;
+            if (authorRole) authorRole.textContent = item.role;
+            if (authorImage) {
+                authorImage.src = item.avatar;
+                authorImage.alt = item.name;
+            }
+        }
+
+        function switchTestimonial(direction) {
+            if (isTestimonialAnimating) return;
+
+            const content = document.getElementById('testimonial-content');
+            const items = getTestimonialsByLanguage(getCurrentLanguage());
+            if (!content || !items.length) return;
+
+            const total = items.length;
+            const nextIndex = direction === 'next'
+                ? (currentTestimonialIndex + 1) % total
+                : (currentTestimonialIndex - 1 + total) % total;
+
+            const leaveClass = direction === 'next' ? 'testimonial-leave-next' : 'testimonial-leave-prev';
+            const enterClass = direction === 'next' ? 'testimonial-enter-next' : 'testimonial-enter-prev';
+
+            isTestimonialAnimating = true;
+            content.classList.add(leaveClass);
+
+            setTimeout(() => {
+                currentTestimonialIndex = nextIndex;
+                renderCurrentTestimonial();
+                content.classList.remove(leaveClass);
+                content.classList.add(enterClass);
+
+                requestAnimationFrame(() => {
+                    requestAnimationFrame(() => {
+                        content.classList.remove(enterClass);
+                    });
+                });
+
+                setTimeout(() => {
+                    isTestimonialAnimating = false;
+                }, 360);
+            }, 180);
+        }
+
+        function initTestimonialsCarousel() {
+            const prevButton = document.getElementById('testimonial-prev-btn');
+            const nextButton = document.getElementById('testimonial-next-btn');
+            if (prevButton) prevButton.addEventListener('click', () => switchTestimonial('prev'));
+            if (nextButton) nextButton.addEventListener('click', () => switchTestimonial('next'));
+            renderCurrentTestimonial();
+        }
+
+        function updateLanguagePickerUI(lang) {
+            const currentLangLabel = document.getElementById('current-lang-label');
+            const enOption = document.getElementById('lang-option-en');
+            const esOption = document.getElementById('lang-option-es');
+            const enCheck = document.getElementById('lang-check-en');
+            const esCheck = document.getElementById('lang-check-es');
+
+            if (currentLangLabel) currentLangLabel.textContent = lang.toUpperCase();
+
+            if (enOption && esOption) {
+                const activeClass = ['text-white', 'bg-white/10'];
+                const inactiveClass = ['text-neutral-400', 'hover:text-white', 'hover:bg-white/5'];
+
+                enOption.classList.remove(...activeClass, ...inactiveClass);
+                esOption.classList.remove(...activeClass, ...inactiveClass);
+
+                if (lang === 'en') {
+                    enOption.classList.add(...activeClass);
+                    esOption.classList.add(...inactiveClass);
+                } else {
+                    esOption.classList.add(...activeClass);
+                    enOption.classList.add(...inactiveClass);
+                }
+            }
+
+            if (enCheck) enCheck.classList.toggle('hidden', lang !== 'en');
+            if (esCheck) esCheck.classList.toggle('hidden', lang !== 'es');
+        }
+
+        function applyTranslations(lang) {
+            const dictionary = TRANSLATIONS[lang] || {};
+            translatableNodes.forEach(({ node, original, prefix, suffix }) => {
+                const translated = dictionary[original] || original;
+                node.nodeValue = `${prefix}${translated}${suffix}`;
+            });
+
+            document.documentElement.lang = lang;
+            document.title = lang === 'es' ? 'Portafolio de Janiel Franz ' : 'Janiel Franz Portfolio';
+            updateLanguagePickerUI(lang);
+        }
+
+        function setLanguage(lang) {
+            const safeLanguage = SUPPORTED_LANGUAGES.includes(lang) ? lang : 'en';
+            localStorage.setItem(LANGUAGE_STORAGE_KEY, safeLanguage);
+            applyTranslations(safeLanguage);
+            renderCurrentTestimonial();
+        }
+
+        function setAboutTimeline(mode) {
+            const workTimeline = document.getElementById('timeline-work');
+            const educationTimeline = document.getElementById('timeline-education');
+            const workButton = document.getElementById('timeline-tab-work');
+            const educationButton = document.getElementById('timeline-tab-education');
+            const activeClass = ['bg-white', 'text-black', 'shadow-sm'];
+            const inactiveClass = ['text-neutral-400', 'hover:text-white', 'hover:bg-white/5'];
+            const safeMode = mode === 'education' ? 'education' : 'work';
+
+            if (!workTimeline || !educationTimeline || !workButton || !educationButton) {
+                return;
+            }
+
+            workTimeline.classList.toggle('hidden', safeMode !== 'work');
+            educationTimeline.classList.toggle('hidden', safeMode !== 'education');
+
+            workButton.classList.remove(...activeClass, ...inactiveClass);
+            educationButton.classList.remove(...activeClass, ...inactiveClass);
+
+            if (safeMode === 'work') {
+                workButton.classList.add(...activeClass);
+                educationButton.classList.add(...inactiveClass);
+                workButton.setAttribute('aria-pressed', 'true');
+                educationButton.setAttribute('aria-pressed', 'false');
+            } else {
+                educationButton.classList.add(...activeClass);
+                workButton.classList.add(...inactiveClass);
+                educationButton.setAttribute('aria-pressed', 'true');
+                workButton.setAttribute('aria-pressed', 'false');
+            }
+        }
+
+        // Accordion Toggle Function
+        function toggleAccordion(id) {
+            const element = document.getElementById(id);
+            if (element) {
+                element.classList.toggle('collapsed');
+            }
+        }
+
+        // Mobile Menu Toggle Function
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            if (menu.classList.contains('hidden')) {
+                menu.classList.remove('hidden');
+                // Allow small delay for display block to apply before opacity transition
+                setTimeout(() => {
+                    menu.classList.remove('opacity-0');
+                }, 10);
+                document.body.style.overflow = 'hidden';
+            } else {
+                menu.classList.add('opacity-0');
+                setTimeout(() => {
+                    menu.classList.add('hidden');
+                    document.body.style.overflow = '';
+                }, 300);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            translatableNodes = collectTranslatableNodes();
+            initTestimonialsCarousel();
+            setLanguage(resolveInitialLanguage());
+            setAboutTimeline('work');
+        });
+    </script>
+
+</body></html>
