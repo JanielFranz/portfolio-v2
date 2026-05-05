@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- Background -->
+  <rect width="100" height="100" rx="22" fill="#0a0a0a"/>
+  <!-- Subtle border — matches border-white/10 from the portfolio -->
+  <rect x="1.5" y="1.5" width="97" height="97" rx="20.5" fill="none" stroke="white" stroke-opacity="0.12" stroke-width="1.5"/>
+  <!-- JF monogram — light weight, tight kerning so they read as one mark -->
+  <text
+    x="50" y="63"
+    text-anchor="middle"
+    font-family="-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif"
+    font-size="44"
+    font-weight="300"
+    letter-spacing="-3"
+    fill="white"
+  >JF</text>
+  <!-- Thin rule — turns letters into a designed logo mark -->
+  <line x1="28" y1="74" x2="72" y2="74" stroke="white" stroke-opacity="0.22" stroke-width="1.5" stroke-linecap="round"/>
+</svg>
