@@ -44,3 +44,7 @@ When adding or editing visible text, update both `en` and `es` keys in the trans
 
 ### Custom Animations
 Testimonial transition animations are defined in a `<style>` block (not Tailwind) near the top of the file — look for `@keyframes` definitions for `fadeInRight`, `fadeInLeft`, etc.
+
+### Way to Contact me
+- linkedin: https://www.linkedin.com/in/janiel-franz-escalante-baygorrea-a00ab6290/
+- mail: janielfranz@outlook.com

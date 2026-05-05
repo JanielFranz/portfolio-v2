@@ -45,11 +45,11 @@
         <!-- Right Actions & Socials -->
         <div class="flex items-center space-x-2 sm:space-x-3 shrink-0">
             <div class="hidden sm:flex items-center space-x-1 mr-2 border-r border-white/10 pr-4">
-                <a href="#" class="p-2 rounded-full text-neutral-400 hover:text-white hover:bg-white/5 transition-all">
-                    <iconify-icon icon="solar:link-circle-linear" class="text-lg"></iconify-icon>
+                <a href="https://www.linkedin.com/in/janiel-franz-escalante-baygorrea-a00ab6290/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" class="p-2 rounded-full text-neutral-400 hover:text-white hover:bg-white/5 transition-all">
+                    <iconify-icon icon="simple-icons:linkedin" class="text-lg"></iconify-icon>
                 </a>
-                <a href="#" class="p-2 rounded-full text-neutral-400 hover:text-white hover:bg-white/5 transition-all">
-                    <iconify-icon icon="solar:case-minimalistic-linear" class="text-lg"></iconify-icon>
+                <a href="mailto:janielfranz@outlook.com" aria-label="Send email" class="p-2 rounded-full text-neutral-400 hover:text-white hover:bg-white/5 transition-all">
+                    <iconify-icon icon="solar:letter-linear" class="text-lg"></iconify-icon>
                 </a>
             </div>
 
@@ -74,7 +74,7 @@
                 </div>
             </div>
 
-            <a href="#" class="hidden sm:flex hover:bg-neutral-200 transition-colors text-xs font-normal text-black bg-white rounded-full px-5 py-2.5 shadow-sm whitespace-nowrap">Start Project</a>
+            <a href="mailto:janielfranz@outlook.com" class="hidden sm:flex hover:bg-neutral-200 transition-colors text-xs font-normal text-black bg-white rounded-full px-5 py-2.5 shadow-sm whitespace-nowrap">Start Project</a>
 
             <!-- Mobile Menu Toggle Button -->
             <button onclick="toggleMobileMenu()" class="lg:hidden p-2 text-neutral-400 hover:text-white transition-colors flex items-center justify-center rounded-full hover:bg-white/5">
@@ -100,7 +100,7 @@
             <a href="#projects" class="text-3xl text-white font-normal hover:text-neutral-400 transition-colors tracking-tight">Projects</a>
             <a href="#testimonials" class="text-3xl text-white font-normal hover:text-neutral-400 transition-colors tracking-tight">Testimonials</a>
 
-            <a href="#" class="mt-8 hover:bg-neutral-200 transition-colors text-sm font-normal text-black bg-white rounded-full px-8 py-3.5 shadow-sm">Start Project</a>
+            <a href="mailto:janielfranz@outlook.com" class="mt-8 hover:bg-neutral-200 transition-colors text-sm font-normal text-black bg-white rounded-full px-8 py-3.5 shadow-sm">Start Project</a>
         </div>
     </div>
 
@@ -520,9 +520,20 @@
         </div>
     </section>
 
-    <!-- Testimonials Section -->
+    <!-- =====================================================================
+         TESTIMONIALS SECTION (#testimonials)
+         Layout: two-column flex row (left: badge + arrows | right: quote)
+         Data: populated at runtime by renderCurrentTestimonial() via the
+               TESTIMONIALS object (keyed by language: 'en' | 'es').
+         Navigation: prev/next buttons trigger switchTestimonial(), which
+               applies CSS transition classes (testimonial-leave-* /
+               testimonial-enter-*) defined in the <style> block above.
+         Index: currentTestimonialIndex wraps around per language array length,
+               so EN (2 items) and ES (3 items) cycle independently.
+    ====================================================================== -->
     <section id="testimonials" class="w-full bg-black/40 border-y border-white/5 relative overflow-hidden py-24 lg:py-32 backdrop-blur-sm z-10">
-        <!-- Background wireframe globe -->
+
+        <!-- Decorative wireframe globe — pure SVG, pointer-events disabled -->
         <div class="absolute -bottom-[20%] -right-[5%] w-[60%] max-w-[800px] aspect-square pointer-events-none text-white/5">
             <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" class="w-full h-full" fill="none" stroke="currentColor" stroke-width="0.5">
                 <circle cx="100" cy="100" r="95"></circle>
@@ -537,15 +548,16 @@
 
         <div class="max-w-[90rem] mx-auto px-6 md:px-12 relative z-10 flex flex-col lg:flex-row gap-16 lg:gap-32">
 
-            <!-- Left Column: Badge & Navigation -->
+            <!-- LEFT COLUMN: section badge at top, carousel arrows pinned to bottom -->
             <div class="flex flex-col justify-between items-start lg:w-1/3 min-h-[12rem] lg:min-h-[24rem]">
-                <!-- Badge -->
+
+                <!-- Section label badge -->
                 <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 shadow-sm border border-white/10 backdrop-blur-sm">
                     <iconify-icon icon="solar:stars-linear" class="text-white text-sm"></iconify-icon>
                     <span class="text-xs font-normal text-neutral-300 tracking-widest uppercase">Client Testimonial</span>
                 </div>
 
-                <!-- Navigation Arrows -->
+                <!-- Prev / Next arrows — wired in initTestimonialsCarousel() -->
                 <div class="flex items-center gap-4 mt-12 lg:mt-0">
                     <button id="testimonial-prev-btn" type="button" aria-label="Previous testimonial" class="w-12 h-12 bg-white/5 rounded-full flex items-center justify-center hover:bg-white/10 active:scale-95 transition-all border border-white/10 text-white group backdrop-blur-sm">
                         <iconify-icon icon="solar:arrow-left-linear" class="text-lg group-hover:-translate-x-1 transition-transform"></iconify-icon>
@@ -556,20 +568,24 @@
                 </div>
             </div>
 
-            <!-- Right Column: Quote -->
+            <!-- RIGHT COLUMN: animated content block
+                 #testimonial-content receives leave/enter CSS classes during transitions.
+                 All child #testimonial-* elements are overwritten by renderCurrentTestimonial(). -->
             <div id="testimonial-content" class="testimonial-content flex flex-col lg:w-2/3 max-w-4xl">
-                <!-- Large Quote Icon -->
+
+                <!-- Static decorative quote mark -->
                 <svg width="40" height="40" viewBox="0 0 24 24" fill="currentColor" class="text-neutral-700 mb-8 lg:-ml-1">
                     <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"></path>
                 </svg>
 
-                <!-- Testimonial Text -->
+                <!-- Quote body: main sentence (white) + highlight sentence (muted).
+                     Initial values are overwritten on DOMContentLoaded. -->
                 <h3 id="testimonial-quote" class="text-2xl md:text-3xl lg:text-[2.25rem] leading-[1.4] font-normal tracking-tight text-white mb-12">
                     <span id="testimonial-quote-main">They Bring Visions To Life With Precision-Crafted Architecture And Interior Design.</span>
                     <span id="testimonial-quote-highlight" class="text-neutral-500 font-light">Discover Our Portfolio Of Innovative Best Projects That Redefine Creativity And Functionality.</span>
                 </h3>
 
-                <!-- Author Profile -->
+                <!-- Author info — avatar src, name, and role set by renderCurrentTestimonial() -->
                 <div class="flex items-center gap-4">
                     <div class="w-12 h-12 rounded-full border border-white/20 shadow-sm overflow-hidden bg-neutral-800 flex-shrink-0">
                         <img id="testimonial-author-image" src="https://i.pravatar.cc/150?u=a042581f4e29026704d" alt="Robert Hobbs" class="w-full h-full object-cover grayscale">
@@ -588,50 +604,85 @@
     <footer class="bg-black pt-20 pb-10 px-6 md:px-12 relative z-10">
         <div class="max-w-[90rem] mx-auto flex flex-col gap-16">
 
-            <!-- Top Section -->
+            <!-- CTA Row -->
             <div class="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-10">
                 <div class="max-w-3xl flex flex-col gap-6">
                     <h2 class="text-3xl md:text-5xl lg:text-[4rem] font-normal tracking-tight text-white leading-[1.1]">
                         Have a project in mind? <br>
                         <span class="text-neutral-500">Let's build it together.</span>
                     </h2>
-                    <a href="mailto:hello@example.com" class="text-lg md:text-xl text-neutral-300 hover:text-white transition-colors inline-flex items-center gap-2 self-start border-b border-white/20 hover:border-white pb-1 font-light">
-                        hello@janiel.design
+                    <a href="mailto:janielfranz@outlook.com" class="text-lg md:text-xl text-neutral-300 hover:text-white transition-colors inline-flex items-center gap-2 self-start border-b border-white/20 hover:border-white pb-1 font-light">
+                        janielfranz@outlook.com
                         <iconify-icon icon="solar:arrow-right-up-linear" class="text-lg"></iconify-icon>
                     </a>
                 </div>
 
-                <div class="flex gap-4">
-                     <button class="inline-flex items-center justify-center gap-2 bg-white text-black px-8 py-3.5 rounded-full text-sm font-normal hover:bg-neutral-200 transition-all duration-300 hover:scale-105 active:scale-95 shadow-sm">
-                        Start a Project
-                    </button>
+                <a href="mailto:janielfranz@outlook.com" class="inline-flex items-center justify-center gap-2 bg-white text-black px-8 py-3.5 rounded-full text-sm font-normal hover:bg-neutral-200 transition-all duration-300 hover:scale-105 active:scale-95 shadow-sm">
+                    Start a Project
+                </a>
+            </div>
+
+            <!-- Divider -->
+            <div class="w-full h-px bg-white/10"></div>
+
+            <!-- Site Map & Brand Row -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+
+                <!-- Brand + socials -->
+                <div class="flex flex-col gap-5">
+                    <div class="text-lg font-normal tracking-tight text-white">
+                        Janiel Franz<span class="text-neutral-500 text-xs font-light ml-0.5">®</span>
+                    </div>
+                    <p class="text-sm text-neutral-500 font-light leading-relaxed max-w-xs">
+                        Software Engineer building scalable digital products and AI-powered tools from Peru.
+                    </p>
+                    <div class="flex items-center gap-3 mt-1">
+                        <a href="https://www.linkedin.com/in/janiel-franz-escalante-baygorrea-a00ab6290/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" class="p-2.5 rounded-full bg-white/5 hover:bg-white/10 transition-colors border border-white/10 hover:border-white/20 hover:text-white">
+                            <iconify-icon icon="simple-icons:linkedin" class="text-base"></iconify-icon>
+                        </a>
+                        <a href="mailto:janielfranz@outlook.com" aria-label="Email" class="p-2.5 rounded-full bg-white/5 hover:bg-white/10 transition-colors border border-white/10 hover:border-white/20 hover:text-white">
+                            <iconify-icon icon="solar:letter-linear" class="text-base"></iconify-icon>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Navigation -->
+                <div class="flex flex-col gap-5">
+                    <span class="text-xs font-normal text-neutral-500 uppercase tracking-widest">Navigation</span>
+                    <nav class="flex flex-col gap-3">
+                        <a href="#start" class="text-sm text-neutral-400 hover:text-white transition-colors font-light">Start</a>
+                        <a href="#about" class="text-sm text-neutral-400 hover:text-white transition-colors font-light">About me</a>
+                        <a href="#services" class="text-sm text-neutral-400 hover:text-white transition-colors font-light">Services</a>
+                        <a href="#projects" class="text-sm text-neutral-400 hover:text-white transition-colors font-light">Projects</a>
+                        <a href="#testimonials" class="text-sm text-neutral-400 hover:text-white transition-colors font-light">Testimonials</a>
+                    </nav>
+                </div>
+
+                <!-- Contact -->
+                <div class="flex flex-col gap-5">
+                    <span class="text-xs font-normal text-neutral-500 uppercase tracking-widest">Get In Touch</span>
+                    <div class="flex flex-col gap-4">
+                        <a href="mailto:janielfranz@outlook.com" class="text-sm text-neutral-400 hover:text-white transition-colors font-light inline-flex items-center gap-2.5">
+                            <iconify-icon icon="solar:letter-linear" class="text-base flex-shrink-0"></iconify-icon>
+                            janielfranz@outlook.com
+                        </a>
+                        <a href="https://www.linkedin.com/in/janiel-franz-escalante-baygorrea-a00ab6290/" target="_blank" rel="noopener noreferrer" class="text-sm text-neutral-400 hover:text-white transition-colors font-light inline-flex items-center gap-2.5">
+                            <iconify-icon icon="simple-icons:linkedin" class="text-base flex-shrink-0"></iconify-icon>
+                            LinkedIn
+                        </a>
+                    </div>
                 </div>
             </div>
 
             <!-- Divider -->
             <div class="w-full h-px bg-white/10"></div>
 
-            <!-- Bottom Section -->
+            <!-- Legal Row -->
             <div class="flex flex-col md:flex-row justify-between items-center gap-6 text-sm text-neutral-500 font-light">
-                <div class="flex items-center gap-2">
-                    <span>© 2024 Janiel Franz. All rights reserved.</span>
-                </div>
-
+                <span>© 2026 Janiel Franz. All rights reserved.</span>
                 <div class="flex gap-8">
                     <a href="#" class="hover:text-white transition-colors">Privacy Policy</a>
                     <a href="#" class="hover:text-white transition-colors">Terms of Service</a>
-                </div>
-
-                <div class="flex items-center space-x-3">
-                    <a href="#" class="p-2.5 rounded-full bg-white/5 hover:bg-white/10 transition-colors border border-white/5 hover:text-white">
-                        <iconify-icon icon="solar:link-circle-linear" class="text-base"></iconify-icon>
-                    </a>
-                    <a href="#" class="p-2.5 rounded-full bg-white/5 hover:bg-white/10 transition-colors border border-white/5 hover:text-white">
-                        <iconify-icon icon="solar:case-minimalistic-linear" class="text-base"></iconify-icon>
-                    </a>
-                    <a href="#" class="p-2.5 rounded-full bg-white/5 hover:bg-white/10 transition-colors border border-white/5 hover:text-white">
-                        <iconify-icon icon="solar:camera-linear" class="text-base"></iconify-icon>
-                    </a>
                 </div>
             </div>
 
